@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Circuity Database Live</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        form { margin-bottom: 20px; }
+        table { border-collapse: collapse; margin-top: 20px; width: 70%; }
+        th, td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                font-size: 26px;
+        }
+        th { background: #eee; }
+
+        p {
+            font-size: 20px;
+        }
+
+        h1 {
+            font-size: 42px;
+        }
+
+        h2 {
+            font-size: 32px;
+        }
+
+        h3 {
+            font-size: 28px;
+        }
+
+        label {
+            font-size: 32px;
+        }
+        
+        input.large {
+            width: 900px;
+            height: 40px;
+            font-size: 32px;
+            padding: 6px;
+            border: 3px solid #444;
+        }
+
+        button.submit-button {
+            font-size: 24px;
+            padding: 14px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Circuity Database Live</h1>
+
+<p>Circuity Database is a new kind of looping database. The source code can be found on <a href="https://github.com/billingross/circuitydatabase">GitHub</a>. Here I have set it to load ESPN National Football League roster data for the 2025-2026 season.
+
+<form method="POST">
+    <label>
+        Comma separated values object URL:<br>
+        <input type="text" name="csvUrl" value="{{ default_csv_url }}" class="large">
+    </label>
+    <br><br>
+
+    <label>
+        Query (e.g. "trevor lawrence age"):<br>
+        <input type="text" name="query" value="{{ query }}" class="large">
+    </label>
+    <br><br>
+
+    <button type="submit" class="submit-button">Submit</button>
+</form>
+
+{% if headers and rows %}
+    <h2>Results</h2>
+
+    <table>
+        <thead>
+            <tr>
+                {% for h in headers %}
+                    <th>{{ h }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in rows %}
+                <tr>
+                    {% for cell in row %}
+                        <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% if column_names %}
+<h3>Column names</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Column name</th>
+        </tr>
+    </thead>
+        
+    <tbody>
+        {% for row in column_names %}
+            <tr>
+                <td>{{ row }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<h3>Example queries</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Query</th>
+        </tr>
+    </thead>
+        
+    <tbody>
+        {% for row in example_queries %}
+            <tr>
+                <td>{{ row }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>Check out the <a href="https://billingross.github.io/circuity">development blog</a>.Circuity Database is a <a href="https://billingross.github.io/circuity">semantic endeavor</a>.<p>
+
+</body>
+</html>
+
